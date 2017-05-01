@@ -34,14 +34,12 @@ BOARD_VENDOR := oneplus
 TARGET_BOARD_INFO_FILE ?= $(PLATFORM_PATH)/board-info.txt
 TARGET_OTA_ASSERT_DEVICE := OnePlus3,oneplus3,OnePlus3T,oneplus3t
 
-# Use Snapdragon LLVM, if available
+# Configure SnapDragon Clang
 TARGET_USE_SDCLANG := true
-
-ifneq ($(HOST_OS),darwin)
-    SDCLANG := true
-    SDCLANG_PATH := prebuilts/clang/linux-x86/host/sdclang-3.8/bin
-    SDCLANG_LTO_DEFS := device/qcom/common/sdllvm-lto-defs.mk
-endif
+SDCLANG := true
+SDCLANG_PATH := vendor/qcom/sdclang-3.8/linux-x86/bin
+SDCLANG_LTO_DEFS := device/qcom/common/sdllvm-lto-defs.mk
+SDCLANG_COMMON_FLAGS := -O3 -fvectorize-loops
 
 # Power HAL
 TARGET_POWERHAL_VARIANT := voxpopuli
@@ -52,9 +50,9 @@ TARGET_USES_INTERACTION_BOOST := true
 #TARGET_ROM_CUSTOM_TOOLCHAIN_AARCH64 := aarch64-linux-android-uber-5.x
 
 # Custom Kernel Toolchains
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := aarch64-linux-gnu-6.x-kernel-linaro
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := aarch64-linux-android-6.x
 KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin
-KERNEL_TOOLCHAIN_PREFIX := aarch64-linux-gnu-
+KERNEL_TOOLCHAIN_PREFIX :=  aarch64-linux-android-
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := msm8996
@@ -92,7 +90,7 @@ TARGET_KERNEL_APPEND_DTB := true
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_SOURCE := kernel/oneplus/msm8996
-TARGET_KERNEL_CONFIG := zenith_oneplus3_defconfig
+TARGET_KERNEL_CONFIG := oneplus3_defconfig
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
 # QCOM hardware
